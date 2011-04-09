@@ -17,6 +17,9 @@ module DecentExposure
   end
 
   def expose(name, &block)
+    if self.superclass.instance_methods.include?(name.to_s)
+      raise "Cannot override existing method #{name}"
+    end
     closured_exposure = default_exposure
     define_method name do
       @_resources       ||= {}
